@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<configuration xmlns="hybris.de/schemas/hmc/generic" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="hybris.de/schemas/hmc/generic hmc.xsd">
+
+	<explorertree>	
+		<group name="yotpogroup">
+			<typeref type="Yotpo" />
+			<typeref type="YotpoOrderExportCronJob" />
+		</group>
+	</explorertree>
+
+	<type name="Yotpo" mode="append">
+		<organizer>
+			<search mode="replace">
+				<condition attribute="code" />
+				<condition attribute="site" />
+			</search>
+			<result defaultview="list" mode="replace">
+				<listview>
+					<itemlayout>
+						<attribute name="code" />
+						<attribute name="site" />
+					</itemlayout>
+				</listview>
+			</result>
+			<editor>
+				<tab name="properties" position="0">
+					<section name="section.yotpo">
+						<listlayout>
+							<attribute name="site" editable="true" />
+							<attribute name="country" editable="true" />
+							<attribute name="language" editable="true" />
+							<attribute name="appKey" editable="true" />
+							<attribute name="clientSecretKey" editable="true" />
+							<attribute name="utokenAuthCode" editable="true" />
+							<attribute name="enablePurchaseFeed" editable="true" />
+							<attribute name="enableBottomLine" editable="true" />
+							<attribute name="enableReviews" editable="true" />
+						</listlayout>
+					</section>
+				</tab>
+			</editor>
+		</organizer>
+	</type>
+
+	<type name="YotpoOrderExportCronJob" mode="append">
+		<organizer>
+			<search mode="replace">
+				<condition attribute="code" />
+				<condition attribute="site" />
+			</search>
+			<result defaultview="list" mode="replace">
+				<listview>
+					<itemlayout>
+						<attribute name="code" />
+						<attribute name="site" />
+					</itemlayout>
+				</listview>
+			</result>
+			<editor>
+				<tab name="properties" position="0">
+					<section name="section.yotpo">
+						<listlayout>
+							<attribute name="site" editable="true" />
+							<attribute name="previousJobStartTime" editable="true" />
+						</listlayout>
+					</section>
+				</tab>
+			</editor>
+		</organizer>
+	</type> 
+
+</configuration>

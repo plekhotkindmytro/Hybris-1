@@ -1,0 +1,138 @@
+<?xml version="1.0"?>
+<!--
+ [y] hybris Platform
+
+ Copyright (c) 2000-2012 hybris AG
+ All rights reserved.
+
+ This software is the confidential and proprietary information of hybris
+ ("Confidential Information"). You shall not disclose such Confidential
+ Information and shall use it only in accordance with the terms of the
+ license agreement you entered into with hybris.
+
+  
+-->
+<!--
+ All hybris buildcallbacks.xml macrodefinitions:
+ 
+ Build/Documentation
+ 
+	 before/after ant macro "clean"
+		 <macrodef name="yotpoaddon_before_clean"/>
+		 <macrodef name="yotpoaddon_after_clean"/>
+	 
+	 before/after ant macro "build"
+		 <macrodef name="yotpoaddon_before_build"/>
+		 <macrodef name="yotpoaddon_after_build"/>
+		 
+	 before/after ant macro "compile_core" - the core module of the extension
+		 <macrodef name="yotpoaddon_before_compile_core">
+		 <macrodef name="yotpoaddon_after_compile_core">
+	 
+	 before/after ant macro "compile_web" - the web module of the extension
+		 <macrodef name="yotpoaddon_before_compile_web" />
+		 <macrodef name="yotpoaddon_after_compile_web" />
+	 
+	 before/after ant macro "compile_hmc" - the hmc module of the extension
+		 <macrodef name="yotpoaddon_before_compile_hmc" />
+		 <macrodef name="yotpoaddon_after_compile_hmc" />
+ 
+ Preparing extension
+ 
+	 will be called in the beginning of the ant call and only once (also when using multiple 
+	 ant targets e.g. ant build yunittest)	
+		 <macrodef name="yotpoaddon_only_once_prepare"/>
+ 
+ Creating ear module/production
+ 
+	 before/after ant macro "ear"
+		 <macrodef name="yotpoaddon_before_ear"/>
+		 <macrodef name="yotpoaddon_after_ear"/>
+
+	 before/after ant macro "production" - for hybris server only
+		 <macrodef name="yotpoaddon_before_production" />
+		 <macrodef name="yotpoaddon_after_production" />
+ 
+ JUnit Test
+ 
+	 before/after ant macro "yunitinit" 
+		 <macrodef name="yotpoaddon_before_yunitinit" />
+		 <macrodef name="yotpoaddon_after_yunitinit" />
+	 
+	 before/after ant macro "yunit"
+		 <macrodef name="yotpoaddon_before_yunit" />
+		 <macrodef name="yotpoaddon_after_yunit" />
+		 
+ Distribution package
+ 
+ 	 before/after ant macro "dist" - internal target; only for use when platform is available in source code
+		 <macrodef name="yotpoaddon_after_dist"/>
+		 <macrodef name="yotpoaddon_before_dist"/>
+	 
+	 before/after ant macro "dist_copy" - internal target; only for use when platform is available in source code
+		 <macrodef name="yotpoaddon_before_dist_copy"/>
+		 <macrodef name="yotpoaddon_after_dist_copy"/>
+ 
+-->
+
+<project name="yotpoaddon_buildcallbacks" >
+	<property file="${ext.yotpoaddon.path}/project.properties" />
+
+	<echo message="ext.${yotpoaddon.storefront.name}.path"/>
+
+	<propertycopy name="targetStorefrontDirectory" from="ext.${yotpoaddon.storefront.name}.path"/>
+	
+	<!-- 
+	    Called whenever 'ant ear' is used. this callback can be used to modify the content of the ear file
+	
+	     ${ear.path}: 			path to ear
+	 -->
+	<!-- If you are running Hybris 4.7 or 4.8, uncomment following macrodef and change arg2 to 4.8 if your version is 4.8 -->
+	<!--
+	<macrodef name="yotpoaddon_after_build">
+		<sequential>
+			<if>
+				<or>
+					<equals arg1="${yotpoaddon.saphybris.version}" arg2="4.8"/>
+				</or>
+				<then>
+					<echo message="Yotpoaddon copying files start"/>
+								
+					<copy todir="${targetStorefrontDirectory}/web/webroot" overwrite="true">
+						<fileset dir="${ext.yotpoaddon.path}/acceleratoraddon/web/webroot">
+							<include name="**/**.tag" />
+						</fileset>
+					</copy>
+					
+					<copy todir="${targetStorefrontDirectory}/web/src" overwrite="true">
+						<fileset dir="${ext.yotpoaddon.path}/acceleratoraddon/web/src">
+							<include name="**/**.java" />
+						</fileset>
+					</copy>
+					
+					<echo message="Yotpoaddon copying files end"/>
+				</then>
+			</if>
+			
+			
+		</sequential>
+	</macrodef>
+	
+	<macrodef name="yotpoaddon_after_clean">
+		<sequential>
+			<if>
+				<or>
+					<equals arg1="${yotpo.saphybris.version}" arg2="4.8"/>
+				</or>
+				<then>
+					<echo message="Yotpoaddon cleaning extension files start"/>
+					<delete file="${targetStorefrontDirectory}/web/webroot/WEB-INF/tags/shared/analytics/yotpo/yotpo.tag"/>
+					<delete file="${targetStorefrontDirectory}/web/src/com/yotpo/yotpoaddon/view/YotpoBeforeViewHandler.java"/>
+					<echo message="Yotpoaddon cleaning extension files end"/>
+				</then>
+			</if>
+			</sequential>
+	
+	</macrodef>
+	-->
+</project>

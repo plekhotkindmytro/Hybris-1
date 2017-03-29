@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+           http://www.springframework.org/schema/beans/spring-beans-3.1.xsd
+           http://www.springframework.org/schema/aop
+           http://www.springframework.org/schema/aop/spring-aop-3.1.xsd
+		   http://www.springframework.org/schema/context
+           http://www.springframework.org/schema/context/spring-context-3.1.xsd">
+
+	<context:component-scan base-package="com.yotpo" />
+
+	<bean id="yotpoOrderExportJobPerformable" class="com.yotpo.cronjob.YotpoOrderExportJobPerformable" scope="tenant"
+		parent="abstractJobPerformable" />
+
+	<bean id="yotpoFeedMapper" class="com.yotpo.mapper.impl.YotpoFeedDataMapperImpl" scope="tenant" /> 
+	
+	<alias name="defaultProductConverter" alias="productConverter"/>
+    <bean id="defaultProductConverter" parent="abstractPopulatingConverter">
+        <property name="targetClass" value="com.yotpo.data.YotpoOrderData"/>
+        <property name="populators">
+            <list>
+                <ref bean="yotpoDataPopulator"/>
+            </list>
+        </property>
+    </bean>
+	
+	<bean id="yotpoDataPopulator" class="com.yotpo.populator.YotpoDataPopulator" scope="tenant" />
+
+	<alias name="defaultYotpoOrderService" alias="yotpoOrderService" />
+	<bean id="defaultYotpoOrderService" class="com.yotpo.order.service.impl.DefaultYotpoOrderService" scope="tenant" />
+
+	<alias name="defaultYotpoConfigurationService" alias="yotpoConfigurationService" />
+	<bean id="defaultYotpoConfigurationService" class="com.yotpo.config.service.impl.DefaultYotpoConfigurationService" scope="tenant" />
+	
+	<bean id="yotpoConfigurationDAO" class="com.yotpo.config.dao.impl.DefaultYotpoConfigurationDAO" scope="tenant" /> 
+	<bean id="yotpoOrderDAO" class="com.yotpo.config.dao.impl.DefaultYotpoOrderDAO" scope="tenant" />
+
+	<bean id="yotpoExportOrderService" class="com.yotpo.order.service.impl.DefaultYotpoExportOrderService" scope="tenant" />
+
+	<bean id="yotpoUploadDataEventListener" class="com.yotpo.listener.YotpoUploadDataEventListener" parent="abstractEventListener" />
+
+	<bean id="yotpoCategoryPathBuilder" class="com.yotpo.builder.YotpoCategoryPathBuilder" scope="tenant" />
+	
+	<bean id="urlResolver" class="com.yotpo.resolver.url.impl.YotpoProductUrlResolverImpl" scope="tenant" />
+</beans>

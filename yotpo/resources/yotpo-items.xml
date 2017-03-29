@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<items 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+			xsi:noNamespaceSchemaLocation="items.xsd">
+
+	<itemtypes>
+		<typegroup name="Export Batch">
+			<itemtype code="YotpoOrderExportCronJob" autocreate="true"
+					  generate="true" extends="CronJob"
+					  jaloclass="com.yotpo.order.dataexport.YotpoOrderExportCronJob">
+				<attributes>
+					<attribute qualifier="job" type="ServicelayerJob"
+				      redeclare="true">
+				      <description>Redeclare job type as ServicelayerJob</description>
+				      <persistence type="property" />
+				      <modifiers read="true" write="true" optional="false" />
+				    </attribute>
+					<attribute qualifier="site" type="CMSSite">
+						<persistence type="property" />
+						<modifiers read="true" write="true" optional="false" initial="true"/>
+					</attribute>
+					<attribute qualifier="previousJobStartTime" type="java.util.Date">
+						<modifiers read="true" write="true" optional="true"/>
+						<persistence type="property"/>
+					</attribute>
+				</attributes>
+			</itemtype>
+		</typegroup>
+
+		<typegroup name="Yotpo">
+			<itemtype code="Yotpo" extends="GenericItem" autocreate="true" generate="true" jaloclass="com.yotpo.service.config.YotpoConfig">
+				<deployment table="yotpo" typecode="32699"/>
+				<attributes>
+					<attribute qualifier="code" type="java.lang.String" >
+						<persistence type="property"/>
+						<modifiers optional="false" unique="true" initial="true"/>
+					</attribute>
+					<attribute qualifier="site" type="CMSSite">
+						<persistence type="property" />
+						<modifiers read="true" write="true" unique="true" optional="false" initial="true"/>
+					</attribute>
+					<attribute qualifier="country" type="Country">
+						<persistence type="property"/>
+						<modifiers read="true" write="true" unique="true" optional="false" />
+					</attribute>
+					<attribute qualifier="language" type="Language">
+						<persistence type="property"/>
+						<modifiers read="true" write="true" unique="true" optional="false" />
+					</attribute>
+					<attribute qualifier="appKey" type="java.lang.String">
+						<modifiers read="true" write="true" unique="true" optional="false" />
+						<persistence type="property"/>
+					</attribute>
+					<attribute qualifier="clientSecretKey" type="java.lang.String" >
+						<modifiers read="true" write="true" unique="true" optional="false" />
+						<persistence type="property"/>
+					</attribute>
+					<attribute qualifier="utokenAuthCode" type="java.lang.String">
+						<persistence type="property"/>
+						<modifiers read="true" write="true" unique="true" optional="false" initial="true"/>
+					</attribute>
+					<attribute qualifier="enablePurchaseFeed" type="java.lang.Boolean">
+						<persistence type="property"/>
+						<modifiers read="true" write="true" unique="true" optional="false" initial="true" />
+					</attribute>
+					<attribute qualifier="enableBottomLine" type="java.lang.Boolean">
+						<persistence type="property"/>
+						<modifiers read="true" write="true" unique="true" optional="false" initial="true" />
+					</attribute>
+					<attribute qualifier="enableReviews" type="java.lang.Boolean">
+						<persistence type="property"/>
+						<modifiers read="true" write="true" unique="true" optional="false" initial="true" />
+					</attribute>
+				</attributes>
+			</itemtype>
+		</typegroup>
+	</itemtypes>
+</items>

@@ -1,0 +1,8 @@
+$site=apparel-uk
+$previousJobStartTime=FEB 10, 2017 10:34:23 AM
+
+INSERT_UPDATE YotpoOrderExportCronJob;code[unique=true];job(code);site(uid);previousJobStartTime;sessionLanguage(isocode)
+;YotpoOrderExportJob;yotpoOrderExportJobPerformable;$site;$previousJobStartTime;en
+
+INSERT_UPDATE Trigger;active;second;minute;hour;day;month;year;cronJob(code)[unique=true];relative[default=true]
+;true;0;0;23;0;0;0;YotpoOrderExportJob
