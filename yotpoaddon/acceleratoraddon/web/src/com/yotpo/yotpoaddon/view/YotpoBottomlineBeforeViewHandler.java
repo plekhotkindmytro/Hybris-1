@@ -23,7 +23,6 @@ import org.springframework.web.util.UrlPathHelper;
 import com.yotpo.model.service.config.YotpoModel;
 import com.yotpo.util.YotpoUtils;
 import com.yotpo.config.service.YotpoConfigurationService;
-import com.yotpo.listener.YotpoUploadDataEventListener;
 import com.yotpo.builder.YotpoCategoryPathBuilder;
 
 /**

@@ -1,7 +1,7 @@
 package com.yotpo.config.dao;
 
-import com.yotpo.data.YotpoOrderSearchCriteria;
-import com.yotpo.data.YotpoOrderSearchResult;
+import com.yotpo.data.YotpoOrderSearchCriteriaData;
+import com.yotpo.data.YotpoOrderSearchResultData;
 
 
 /**
@@ -15,5 +15,5 @@ public interface YotpoOrderDAO
 	 *
 	 * @return YotpoOrderSearchResult
 	 */
-	public YotpoOrderSearchResult findOrderByStatus(YotpoOrderSearchCriteria yotpoOrderSearchCriteria);
+	public YotpoOrderSearchResultData findOrderByStatus(YotpoOrderSearchCriteriaData yotpoOrderSearchCriteria);
 }

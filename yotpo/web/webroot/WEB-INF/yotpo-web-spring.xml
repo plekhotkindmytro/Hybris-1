@@ -29,22 +29,22 @@
     
 	<!--  Configure the class to use for jalo session creation -->
 	<!-- <bean id="jalosession"   class="de.hybris.platform.jalo.JaloSessionFactory">
-		<property name="targetClassName" value="com.yotpo.jalo.YotpoextensionJaloSession"/>
+		<property name="targetClassName" value="com.yotpo.jalo.YotpoJaloSession"/>
 	</bean>-->
 
 	<!-- Spring managed FilterChain for hybris Filter stack -->
-	<bean id="yotpoextensionPlatformFilterChain" class="de.hybris.platform.servicelayer.web.PlatformFilterChain">
+	<bean id="yotpoPlatformFilterChain" class="de.hybris.platform.servicelayer.web.PlatformFilterChain">
 		<constructor-arg>
 			<list>
 				<ref bean="log4jFilter"/>
 				<ref bean="dynamicTenantActivationFilter"/>
 				<ref bean="sessionFilter"/>
-           		<ref bean="yotpoextensionSecureMediaFilter"/>				
+           		<ref bean="yotpoSecureMediaFilter"/>
 			</list>
 		</constructor-arg>
 	</bean>
  
-   <bean id="yotpoextensionSecureMediaFilter" class="de.hybris.platform.servicelayer.web.SecureMediaFilter">
+   <bean id="yotpoSecureMediaFilter" class="de.hybris.platform.servicelayer.web.SecureMediaFilter">
        <property name="mediaPermissionService" ref="mediaPermissionService"/>
        <property name="modelService" ref="modelService"/>
        <property name="userService" ref="userService"/>

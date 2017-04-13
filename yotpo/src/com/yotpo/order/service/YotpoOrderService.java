@@ -1,7 +1,7 @@
 package com.yotpo.order.service;
 
+import com.yotpo.data.YotpoExportRequestData;
 import com.yotpo.data.YotpoFeedData;
-import com.yotpo.event.YotpoExportDataEvent;
 import com.yotpo.model.service.config.YotpoModel;
 
 
@@ -13,5 +13,5 @@ public interface YotpoOrderService
 	/**
 	 * Export orders to yotpo, prepares the search criteria, prepares yotpo payload and export orders.
 	 */
-	void exportOrders(YotpoFeedData yotpoFeedData, YotpoModel yotpoConfiguretion, YotpoExportDataEvent yotpoExportDataEvent);
+	void exportOrders(YotpoFeedData yotpoFeedData, YotpoModel yotpoConfiguretion, YotpoExportRequestData yotpoExportDataRequest);
 }

@@ -14,6 +14,7 @@ import java.util.Map;
 
 import javax.annotation.Resource;
 
+import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang3.time.DateFormatUtils;
 import org.apache.log4j.Logger;
 
@@ -96,7 +97,7 @@ public class YotpoFeedDataMapperImpl implements YotpoFeedDataMapper
 			final String url = urlResolver.getURL(orderModel.getLanguage().getIsocode(), entryModel.getProduct());
 			yotpoProductData.setProductURL(YotpoUtils.nullToEmpty(url));
 
-			yotpoProductData.setPrice(entryModel.getTotalPrice());
+			yotpoProductData.setPrice(entryModel.getBasePrice());
 
 			yotpoProducts.put(entryModel.getProduct().getCode(), yotpoProductData);
 
@@ -121,15 +122,15 @@ public class YotpoFeedDataMapperImpl implements YotpoFeedDataMapper
 
 	private final String getImageURL(final AbstractOrderEntryModel productEntry)
 	{
-		String basePath = "";
+		String basePath = StringUtils.EMPTY;
 		try
 		{
 			basePath = configurationService.getConfiguration().getString("yotpo.basepath.http");
 		}
-		catch (final Exception e)
+		catch (final Exception exception)
 		{
-			LOG.error("Exception occur while loading yotpo base path, property : " + e.toString());
-			throw new UnknownIdentifierException("Exception occur while loading yotpo base path property : " + e.toString());
+			LOG.error("Exception occur while loading yotpo base path, property ", exception);
+			throw new UnknownIdentifierException("Exception occur while loading yotpo base path property", exception);
 		}
 
 		if (productEntry.getProduct() instanceof VariantProductModel
@@ -165,6 +166,6 @@ public class YotpoFeedDataMapperImpl implements YotpoFeedDataMapper
 			return path;
 		}
 
-		return "";
+		return StringUtils.EMPTY;
 	}
 }

@@ -57,7 +57,7 @@ public class YotpoHeaderBeforeViewHandler implements BeforeViewHandler
 				return;
 			}
 
-   		String yotpoWidgetURL = "";
+   		String yotpoWidgetURL = StringUtils.EMPTY;
 			try
 			{
 				yotpoWidgetURL = (String) configurationService.getConfiguration().getProperty("yotpo.widget.url");

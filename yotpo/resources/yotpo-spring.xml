@@ -39,8 +39,6 @@
 
 	<bean id="yotpoExportOrderService" class="com.yotpo.order.service.impl.DefaultYotpoExportOrderService" scope="tenant" />
 
-	<bean id="yotpoUploadDataEventListener" class="com.yotpo.listener.YotpoUploadDataEventListener" parent="abstractEventListener" />
-
 	<bean id="yotpoCategoryPathBuilder" class="com.yotpo.builder.YotpoCategoryPathBuilder" scope="tenant" />
 	
 	<bean id="urlResolver" class="com.yotpo.resolver.url.impl.YotpoProductUrlResolverImpl" scope="tenant" />

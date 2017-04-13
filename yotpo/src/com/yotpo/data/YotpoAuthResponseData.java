@@ -12,7 +12,7 @@ public class YotpoAuthResponseData
 	private String accessToken;
 	private String tokenType;
 	private String authError;
-	private YotpoResponseStatus status;
+	private YotpoResponseStatusData status;
 	private boolean error;
 
 	/**
@@ -72,7 +72,7 @@ public class YotpoAuthResponseData
 	/**
 	 * @return the status
 	 */
-	public YotpoResponseStatus getStatus()
+	public YotpoResponseStatusData getStatus()
 	{
 		return status;
 	}
@@ -82,7 +82,7 @@ public class YotpoAuthResponseData
 	 *           the status to set
 	 */
 	@JsonSetter("status")
-	public void setStatus(final YotpoResponseStatus status)
+	public void setStatus(final YotpoResponseStatusData status)
 	{
 		this.status = status;
 	}

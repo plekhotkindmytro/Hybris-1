@@ -5,6 +5,7 @@ import de.hybris.platform.category.model.CategoryModel;
 import de.hybris.platform.core.model.product.ProductModel;
 import de.hybris.platform.product.ProductService;
 import de.hybris.platform.variants.model.VariantProductModel;
+import org.apache.commons.lang.StringUtils;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -31,7 +32,7 @@ public class YotpoCategoryPathBuilder
 	public String buildCategoryPath(final String productCode)
 	{
 		final StringBuilder categoryPath = new StringBuilder("");
-		String categoryPathSeprator = "";
+		String categoryPathSeprator = StringUtils.EMPTY;
 		final ProductModel productModel = productService.getProductForCode(productCode);
 		final List<String> categories = new ArrayList<String>();
 

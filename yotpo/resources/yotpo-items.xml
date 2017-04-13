@@ -13,7 +13,7 @@
 				      redeclare="true">
 				      <description>Redeclare job type as ServicelayerJob</description>
 				      <persistence type="property" />
-				      <modifiers read="true" write="true" optional="false" />
+				      <modifiers read="true" write="true" optional="false" initial="true"/>
 				    </attribute>
 					<attribute qualifier="site" type="CMSSite">
 						<persistence type="property" />
@@ -41,18 +41,18 @@
 					</attribute>
 					<attribute qualifier="country" type="Country">
 						<persistence type="property"/>
-						<modifiers read="true" write="true" unique="true" optional="false" />
+						<modifiers read="true" write="true" unique="true" optional="true" />
 					</attribute>
 					<attribute qualifier="language" type="Language">
 						<persistence type="property"/>
-						<modifiers read="true" write="true" unique="true" optional="false" />
+						<modifiers read="true" write="true" unique="true" optional="true" />
 					</attribute>
 					<attribute qualifier="appKey" type="java.lang.String">
-						<modifiers read="true" write="true" unique="true" optional="false" />
+						<modifiers read="true" write="true" unique="true" optional="true" />
 						<persistence type="property"/>
 					</attribute>
 					<attribute qualifier="clientSecretKey" type="java.lang.String" >
-						<modifiers read="true" write="true" unique="true" optional="false" />
+						<modifiers read="true" write="true" unique="true" optional="true" />
 						<persistence type="property"/>
 					</attribute>
 					<attribute qualifier="utokenAuthCode" type="java.lang.String">

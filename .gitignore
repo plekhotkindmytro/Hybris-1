@@ -1,0 +1,17 @@
+*.class
+**/gensrc/**
+**/platformhome.properties
+yotpo/hmc/classes/rebel.xml
+yotpostore/yotpocore/hmc/classes/rebel.xml
+yotpostore/yotpostorefront/web/addonsrc/yotpoaddon/
+yotpostore/yotpocore/hmc/bin/yotpocorehmc.jar
+yotpo/hmc/bin/yotpohmc.jar
+yotpostore/yotpostorefront/web/webroot/WEB-INF/tags/addons/yotpoaddon/
+yotpo/eclipsebin/
+**/bin/.gitignore
+**/bin/.project
+**/.classpath
+yotpo/.externalToolBuilders/
+yotpo/.settings/
+yotpoaddon/.externalToolBuilders/
+yotpoaddon/.settings/

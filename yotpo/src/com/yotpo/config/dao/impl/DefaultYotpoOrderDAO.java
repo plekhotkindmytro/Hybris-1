@@ -13,9 +13,9 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.yotpo.config.dao.YotpoOrderDAO;
-import com.yotpo.data.YotpoOrderSearchCriteria;
-import com.yotpo.data.YotpoOrderSearchResult;
-import com.yotpo.data.YotpoPagingModel;
+import com.yotpo.data.YotpoOrderSearchCriteriaData;
+import com.yotpo.data.YotpoOrderSearchResultData;
+import com.yotpo.data.YotpoPagingData;
 
 
 /**
@@ -33,16 +33,15 @@ public class DefaultYotpoOrderDAO implements YotpoOrderDAO
 			+ "} in (?statuses) AND {o:" + OrderModel.SITE + "}=?site ORDER BY {o:" + OrderModel.PK + "} ASC";
 
 	@Override
-	public YotpoOrderSearchResult findOrderByStatus(final YotpoOrderSearchCriteria yotpoOrderSearchCriteria)
+	public YotpoOrderSearchResultData findOrderByStatus(final YotpoOrderSearchCriteriaData yotpoOrderSearchCriteria)
 	{
-
 
 		final List<OrderStatus> statuses = yotpoOrderSearchCriteria.getStatuses();
 		final CMSSiteModel site = yotpoOrderSearchCriteria.getSite();
 		final Date dateTime = yotpoOrderSearchCriteria.getDateTime();
-		final YotpoPagingModel pagingModel = yotpoOrderSearchCriteria.getPagingModel();
+		final YotpoPagingData pagingModel = yotpoOrderSearchCriteria.getPagingModel();
 
-		final YotpoOrderSearchResult yotpoOrderSearchResult = new YotpoOrderSearchResult();
+		final YotpoOrderSearchResultData yotpoOrderSearchResult = new YotpoOrderSearchResultData();
 
 		final FlexibleSearchQuery query = new FlexibleSearchQuery(queryString);
 		query.addQueryParameter("site", site);
@@ -65,5 +64,4 @@ public class DefaultYotpoOrderDAO implements YotpoOrderDAO
 
 		return yotpoOrderSearchResult;
 	}
-
 }

@@ -27,7 +27,6 @@ public class DefaultYotpoConfigurationDAO implements YotpoConfigurationDAO
 	@Override
 	public List<YotpoModel> findAllByCMSSite(final CMSSiteModel cmsSiteModel)
 	{
-
 		final FlexibleSearchQuery query = new FlexibleSearchQuery(queryString);
 		query.addQueryParameter("cmsSite", cmsSiteModel);
 		return flexibleSearchService.<YotpoModel> search(query).getResult();

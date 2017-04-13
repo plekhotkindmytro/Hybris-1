@@ -21,11 +21,11 @@ import org.springframework.web.client.RestTemplate;
 
 import com.yotpo.data.YotpoAuthResponseData;
 import com.yotpo.data.YotpoAuthenticationData;
+import com.yotpo.data.YotpoExportRequestData;
 import com.yotpo.data.YotpoFeedData;
-import com.yotpo.data.YotpoOrderPayload;
+import com.yotpo.data.YotpoOrderPayloadData;
 import com.yotpo.data.YotpoOrderResponseData;
-import com.yotpo.data.YotpoResponseStatus;
-import com.yotpo.event.YotpoExportDataEvent;
+import com.yotpo.data.YotpoResponseStatusData;
 import com.yotpo.model.service.config.YotpoModel;
 import com.yotpo.order.service.YotpoExportOrderService;
 import com.yotpo.util.YotpoUtils;
@@ -45,8 +45,8 @@ public class DefaultYotpoExportOrderService implements YotpoExportOrderService
 	private ConfigurationService configurationService;
 
 	@Override
-	public void exportOrderToYotpo(final YotpoOrderPayload yotpoOrderPayload, final YotpoModel yotpoConfig,
-			final YotpoExportDataEvent yotpoExportDataEvent, final YotpoFeedData yotpoFeedData)
+	public void exportOrderToYotpo(final YotpoOrderPayloadData yotpoOrderPayload, final YotpoModel yotpoConfig,
+			final YotpoExportRequestData yotpoExportDataRequest, final YotpoFeedData yotpoFeedData)
 	{
 
 		final String yotpoAppKey = yotpoConfig.getAppKey();
@@ -86,7 +86,7 @@ public class DefaultYotpoExportOrderService implements YotpoExportOrderService
 
 	/**
 	 * export orders to yotpo, returns True if success
-	 * 
+	 *
 	 * @return {@link Boolean}
 	 */
 	private boolean exportOrders(final String orderJSON, final String yotpoURL, final boolean isDebugEnabled)
@@ -160,7 +160,7 @@ public class DefaultYotpoExportOrderService implements YotpoExportOrderService
 
 	/**
 	 * authenticate on yotpo and returns resposne data
-	 * 
+	 *
 	 * @return YotpoAuthResponseData
 	 */
 	private YotpoAuthResponseData authenticate(final YotpoModel yotpoConfig, final YotpoFeedData yotpoFeedData)
@@ -182,7 +182,7 @@ public class DefaultYotpoExportOrderService implements YotpoExportOrderService
 
 		if (httpStatus.equals(HttpStatus.NOT_FOUND))
 		{
-			final YotpoResponseStatus status = yotpoResponse.getStatus();
+			final YotpoResponseStatusData status = yotpoResponse.getStatus();
 			if (status != null)
 			{
 				LOG.error("AuthenticateOnYotpo: The authentication request returned error. \n Details are:" + " Error Message - "
@@ -213,7 +213,7 @@ public class DefaultYotpoExportOrderService implements YotpoExportOrderService
 		else
 		{
 			LOG.error("AuthenticateOnYotpo: Unknown error occured while trying to authenticate with Yotpo - HTTP Status Code is: "
-					+ httpStatus.value() + ", Error Text is: " + response.getBody());//TODO test in case of error what is body
+					+ httpStatus.value() + ", Error Text is: " + response.getBody());
 
 			yotpoResponse.setError(true);
 		}
@@ -223,10 +223,10 @@ public class DefaultYotpoExportOrderService implements YotpoExportOrderService
 
 	/**
 	 * prepare order json
-	 * 
+	 *
 	 * @return String
 	 */
-	private String prepareOrderJSON(final YotpoOrderPayload yotpoOrderPayload)
+	private String prepareOrderJSON(final YotpoOrderPayloadData yotpoOrderPayload)
 	{
 
 		final ObjectMapper mapper = new ObjectMapper();
@@ -244,7 +244,7 @@ public class DefaultYotpoExportOrderService implements YotpoExportOrderService
 
 	/**
 	 * prepare authentication json
-	 * 
+	 *
 	 * @return String
 	 */
 	private String prepareAuthenticationJSON(final String appKey, final String clientSecretKey)
@@ -270,7 +270,7 @@ public class DefaultYotpoExportOrderService implements YotpoExportOrderService
 
 	/**
 	 * parse yotpo auth response
-	 * 
+	 *
 	 * @return YotpoAuthResponseData
 	 */
 	private YotpoAuthResponseData parseYotpoResponse(final ResponseEntity<String> response)
@@ -290,7 +290,7 @@ public class DefaultYotpoExportOrderService implements YotpoExportOrderService
 
 	/**
 	 * parse yotpo feed response
-	 * 
+	 *
 	 * @return YotpoOrderResponseData
 	 */
 	private YotpoOrderResponseData parseYotpoOrderResponse(final ResponseEntity<String> response)

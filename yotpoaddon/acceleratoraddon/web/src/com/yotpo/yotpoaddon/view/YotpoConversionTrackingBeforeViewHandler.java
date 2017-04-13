@@ -70,7 +70,7 @@ public class YotpoConversionTrackingBeforeViewHandler implements BeforeViewHandl
 				return;
 			}
 			
-   		String yotpoConversionURL = "";
+   		String yotpoConversionURL = StringUtils.EMPTY;
 			try
 			{
 				yotpoConversionURL = (String) configurationService.getConfiguration().getProperty("yotpo.conversion.url");

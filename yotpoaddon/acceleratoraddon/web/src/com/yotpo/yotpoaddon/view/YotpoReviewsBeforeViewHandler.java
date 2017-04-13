@@ -63,7 +63,7 @@ public class YotpoReviewsBeforeViewHandler implements BeforeViewHandler
 
       	if(yotpoConfiguretion.getEnableReviews())
       	{
-      		String baseUrl = "";
+      		String baseUrl = StringUtils.EMPTY;
    			try
    			{
    				baseUrl = configurationService.getConfiguration().getString("yotpo.basepath.http");

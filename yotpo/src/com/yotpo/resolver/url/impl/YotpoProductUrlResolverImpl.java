@@ -41,11 +41,11 @@ public class YotpoProductUrlResolverImpl implements YotpoProductUrlResolver
 
 			return path;
 		}
-		catch (final Exception e)
+		catch (final Exception exception)
 		{
-			LOG.error("Exception occur while loading yotpo base path, yotpo store name properties : " + e.toString());
+			LOG.error("Exception occur while loading yotpo base path, yotpo store name properties ", exception);
 			throw new UnknownIdentifierException(
-					"Exception occur while loading yotpo base path, yotpo store name properties : " + e.toString());
+					"Exception occur while loading yotpo base path, yotpo store name properties ", exception);
 		}
 	}
 }

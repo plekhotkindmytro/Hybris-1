@@ -11,13 +11,13 @@ import java.util.Locale;
 import javax.annotation.Resource;
 
 import com.yotpo.config.dao.YotpoOrderDAO;
+import com.yotpo.data.YotpoExportRequestData;
 import com.yotpo.data.YotpoFeedData;
 import com.yotpo.data.YotpoOrderData;
-import com.yotpo.data.YotpoOrderPayload;
-import com.yotpo.data.YotpoOrderSearchCriteria;
-import com.yotpo.data.YotpoOrderSearchResult;
-import com.yotpo.data.YotpoPagingModel;
-import com.yotpo.event.YotpoExportDataEvent;
+import com.yotpo.data.YotpoOrderPayloadData;
+import com.yotpo.data.YotpoOrderSearchCriteriaData;
+import com.yotpo.data.YotpoOrderSearchResultData;
+import com.yotpo.data.YotpoPagingData;
 import com.yotpo.model.service.config.YotpoModel;
 import com.yotpo.order.service.YotpoExportOrderService;
 import com.yotpo.order.service.YotpoOrderService;
@@ -30,6 +30,8 @@ import com.yotpo.populator.YotpoDataPopulator;
 public class DefaultYotpoOrderService implements YotpoOrderService
 {
 
+	private static String PLATFORM = "general";
+
 	@Resource
 	private YotpoDataPopulator yotpoDataPopulator;
 	@Resource
@@ -39,7 +41,7 @@ public class DefaultYotpoOrderService implements YotpoOrderService
 
 	@Override
 	public void exportOrders(final YotpoFeedData yotpoFeedData, final YotpoModel yotpoConfiguretion,
-			final YotpoExportDataEvent yotpoExportDataEvent)
+			final YotpoExportRequestData yotpoExportDataRequest)
 	{
 
 		final CMSSiteModel site = yotpoConfiguretion.getSite();
@@ -50,23 +52,23 @@ public class DefaultYotpoOrderService implements YotpoOrderService
 		site.setLocale(locale);
 
 		//Prepare search criteria
-		final YotpoOrderSearchCriteria yotpoOrderSearchCriteria = new YotpoOrderSearchCriteria();
+		final YotpoOrderSearchCriteriaData yotpoOrderSearchCriteria = new YotpoOrderSearchCriteriaData();
 
-		final YotpoPagingModel pagingModel = new YotpoPagingModel();
+		final YotpoPagingData pagingModel = new YotpoPagingData();
 		pagingModel.setIndex(0);
 		pagingModel.setBatchSize(yotpoFeedData.getBatchSize());
 
 		yotpoOrderSearchCriteria.setPagingModel(pagingModel);
-		yotpoOrderSearchCriteria.setDateTime(yotpoExportDataEvent.getPreviousJobStartTime());
+		yotpoOrderSearchCriteria.setDateTime(yotpoExportDataRequest.getPreviousJobStartTime());
 		yotpoOrderSearchCriteria.setSite(site);
 		yotpoOrderSearchCriteria.setStatuses(yotpoFeedData.getOrderStatuses());
 
 		//set current time as job start time
-		yotpoExportDataEvent.setJobStartTime(new Date());
+		yotpoExportDataRequest.setJobStartTime(new Date());
 
 		do
 		{
-			final YotpoOrderSearchResult searchResults = yotpoOrderDAO.findOrderByStatus(yotpoOrderSearchCriteria);
+			final YotpoOrderSearchResultData searchResults = yotpoOrderDAO.findOrderByStatus(yotpoOrderSearchCriteria);
 			final List<OrderModel> orders = searchResults.getOrders();
 
 			if (!orders.isEmpty())
@@ -82,13 +84,13 @@ public class DefaultYotpoOrderService implements YotpoOrderService
 					yotpoOrders.add(yotpoOrder);
 				}
 				//prepare yotpo order payload
-				final YotpoOrderPayload yotpoOrderPayload = new YotpoOrderPayload();
+				final YotpoOrderPayloadData yotpoOrderPayload = new YotpoOrderPayloadData();
 				yotpoOrderPayload.setIsValidateData(Boolean.TRUE);
-				yotpoOrderPayload.setPlatform("general");
+				yotpoOrderPayload.setPlatform(PLATFORM);
 				yotpoOrderPayload.setUtokenAuthCode(yotpoConfiguretion.getUtokenAuthCode());
 				yotpoOrderPayload.setYotpoOrders(yotpoOrders);
 
-				yotpoExportOrderService.exportOrderToYotpo(yotpoOrderPayload, yotpoConfiguretion, yotpoExportDataEvent,
+				yotpoExportOrderService.exportOrderToYotpo(yotpoOrderPayload, yotpoConfiguretion, yotpoExportDataRequest,
 						yotpoFeedData);
 			}
 		}
