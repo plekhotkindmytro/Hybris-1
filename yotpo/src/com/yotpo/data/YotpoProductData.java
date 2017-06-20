@@ -13,6 +13,7 @@ public class YotpoProductData
 	private String imageURL;
 	private String productURL;
 	private Double price;
+	private String baseProduct;
 
 	/**
 	 * @return the productName
@@ -104,4 +105,22 @@ public class YotpoProductData
 		this.price = price;
 	}
 
+	/**
+	 *
+	 * @return
+	 */
+	public String getBaseProduct()
+	{
+		return baseProduct;
+	}
+
+	/**
+	 *
+	 * @param baseProduct
+	 */
+	@JsonSetter("group_id")
+	public void setBaseProduct(final String baseProduct)
+	{
+		this.baseProduct = baseProduct;
+	}
 }

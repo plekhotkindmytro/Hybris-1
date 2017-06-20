@@ -24,7 +24,6 @@ import com.yotpo.mapper.YotpoFeedDataMapper;
 import com.yotpo.resolver.url.YotpoProductUrlResolver;
 import com.yotpo.util.YotpoUtils;
 
-
 /**
  * Created by haseeb
  */
@@ -87,9 +86,11 @@ public class YotpoFeedDataMapperImpl implements YotpoFeedDataMapper
 
 			final String name = YotpoUtils.nullToEmpty(entryModel.getProduct().getName());
 			final String description = getProductDescription(entryModel.getProduct(), ProductModel.SUMMARY);
+			final String baseProductCode = getBaseProductCode(entryModel.getProduct());
 
 			yotpoProductData.setProductName(name);
 			yotpoProductData.setDescription(YotpoUtils.nullToEmpty(description));
+			yotpoProductData.setBaseProduct(YotpoUtils.nullToEmpty(baseProductCode));
 
 			final String imageUrl = getImageURL(entryModel);
 			yotpoProductData.setImageURL(imageUrl);
@@ -104,6 +105,20 @@ public class YotpoFeedDataMapperImpl implements YotpoFeedDataMapper
 
 		}
 		return yotpoProducts;
+	}
+
+	private final String getBaseProductCode(final ProductModel productModel)
+	{
+		if (productModel instanceof VariantProductModel)
+		{
+			final ProductModel baseProduct = ((VariantProductModel) productModel).getBaseProduct();
+			if (baseProduct != null)
+			{
+				return baseProduct.getCode();
+			}
+			return StringUtils.EMPTY;
+		}
+		return productModel.getCode();
 	}
 
 	private final String getProductDescription(final ProductModel productModel, final String attribute)

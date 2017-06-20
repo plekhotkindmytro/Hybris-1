@@ -13,6 +13,7 @@ public class YotpoOrderResponseData
 	private Integer code;
 	private String message;
 	private List<String> errors;
+	private String uuid;
 
 	/**
 	 * @return the code
@@ -66,5 +67,24 @@ public class YotpoOrderResponseData
 	public void setErrors(final List<String> errors)
 	{
 		this.errors = errors;
+	}
+
+	/**
+	 * 
+	 * @return
+	 */
+	public String getUuid()
+	{
+		return uuid;
+	}
+
+	/**
+	 *
+	 * @param uuid
+	 */
+	@JsonSetter("uuid")
+	public void setUuid(final String uuid)
+	{
+		this.uuid = uuid;
 	}
 }
