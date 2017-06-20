@@ -1,7 +1,8 @@
 package com.yotpo.yotpoaddon.view;
 
 import de.hybris.platform.acceleratorstorefrontcommons.interceptors.BeforeViewHandler;
-import de.hybris.platform.commercefacades.product.data.ProductData;
+import de.hybris.platform.cms2.servicelayer.services.CMSSiteService;
+import de.hybris.platform.servicelayer.config.ConfigurationService;
 
 import java.util.Set;
 
@@ -14,7 +15,9 @@ import org.springframework.beans.factory.annotation.Required;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.util.UrlPathHelper;
 
-import com.yotpo.builder.YotpoCategoryPathBuilder;
+import com.yotpo.config.service.YotpoConfigurationService;
+import com.yotpo.model.service.config.YotpoModel;
+import com.yotpo.util.YotpoUtils;
 
 
 /**
@@ -22,13 +25,16 @@ import com.yotpo.builder.YotpoCategoryPathBuilder;
  * @author Haseeb Ahmad
  *
  */
-public class YotpoBottomlineBeforeViewHandler implements BeforeViewHandler
+public class YotpoBottomlineHeaderBeforeViewHandler implements BeforeViewHandler
 {
-
-	private final static Logger LOG = Logger.getLogger(YotpoBottomlineBeforeViewHandler.class);
+	private final static Logger LOG = Logger.getLogger(YotpoBottomlineHeaderBeforeViewHandler.class);
 
 	@Resource
-	private YotpoCategoryPathBuilder yotpoCategoryPathBuilder;
+	private CMSSiteService cmsSiteService;
+	@Resource
+	private YotpoConfigurationService yotpoConfigurationService;
+	@Resource
+	private ConfigurationService configurationService;
 
 	private Set<String> pathsToIntercept;
 
@@ -41,13 +47,33 @@ public class YotpoBottomlineBeforeViewHandler implements BeforeViewHandler
 
 		if (shouldIntercept(path) && requestMethodMatches(request.getMethod()))
 		{
+			final YotpoModel yotpoConfiguretion = yotpoConfigurationService.getYotpoConfiguration(cmsSiteService.getCurrentSite());
 
-			final boolean isBottomLineEnabled = (boolean) modelAndView.getModel().get("isBottomLineEnabled");
-			if (isBottomLineEnabled)
+			final boolean isValidate = YotpoUtils.validateMandatoryAppKey(yotpoConfiguretion);
+			if (!isValidate)
 			{
-				final ProductData productData = (ProductData) modelAndView.getModel().get("product");
-				modelAndView.addObject("categoryPath", yotpoCategoryPathBuilder.buildCategoryPath(productData.getCode()));
+				LOG.error("The current site missing mandatory data for App Key therefore skiping the process.");
+				return;
 			}
+
+			if (yotpoConfiguretion.getEnableBottomLine())
+			{
+				String baseUrl = "";
+				try
+				{
+					baseUrl = configurationService.getConfiguration().getString("yotpo.basepath.http");
+				}
+				catch (final Exception e)
+				{
+					LOG.error("Exception occur while loading yotpoBasePath property : " + e.toString());
+					return;
+				}
+
+				modelAndView.addObject("yotpoAppKey", yotpoConfiguretion.getAppKey());
+				modelAndView.addObject("baseUrl", baseUrl);
+			}
+
+			modelAndView.addObject("isBottomLineEnabled", yotpoConfiguretion.getEnableBottomLine());
 		}
 	}
 
