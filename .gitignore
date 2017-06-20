@@ -15,3 +15,8 @@ yotpo/.externalToolBuilders/
 yotpo/.settings/
 yotpoaddon/.externalToolBuilders/
 yotpoaddon/.settings/
+yotpostore/
+yotpo/bin/
+yotpoaddon/bin/
+*.xsd
+**/build.xml
