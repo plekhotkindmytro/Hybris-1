@@ -49,8 +49,8 @@ public class YotpoBottomlineHeaderBeforeViewHandler implements BeforeViewHandler
 		{
 			final YotpoModel yotpoConfiguretion = yotpoConfigurationService.getYotpoConfiguration(cmsSiteService.getCurrentSite());
 
-			final boolean isValidate = YotpoUtils.validateMandatoryAppKey(yotpoConfiguretion);
-			if (!isValidate)
+			final boolean isValid = YotpoUtils.validateMandatoryAppKey(yotpoConfiguretion);
+			if (!isValid)
 			{
 				LOG.error("The current site missing mandatory data for App Key therefore skiping the process.");
 				return;
